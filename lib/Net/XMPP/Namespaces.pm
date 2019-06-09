@@ -595,7 +595,7 @@ $SKIPNS{'__netxmpp__'} = 1;
             xpath => {
                       RoomName => { path => 'configuration/roomname/text()' },
                       User     => { 
-                          type => "array" 
+                          type => "array" ,
                           path => 'occupants/user/text()' ,
                       },
                      },
