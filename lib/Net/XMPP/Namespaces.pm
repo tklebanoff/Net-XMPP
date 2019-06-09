@@ -587,6 +587,21 @@ $SKIPNS{'__netxmpp__'} = 1;
            );
 }
 
+#-----------------------------------------------------------------------------
+# urn:xmpp:muclight:0#create
+#-----------------------------------------------------------------------------
+{
+    &add_ns(ns    => "urn:xmpp:muclight:0#create",
+            xpath => {
+                      RoomName => { path => 'configuration/roomname/text()' },
+                      User     => { 
+                          type => "array" 
+                          path => 'occupants/user/text()' ,
+                      },
+                     },
+           );
+}
+
 
 
 sub add_ns

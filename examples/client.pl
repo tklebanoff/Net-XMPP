@@ -62,14 +62,12 @@ print "ERROR: The connection was killed...\n";
 
 exit(0);
 
-
 sub Stop
 {
     print "Exiting...\n";
     $Connection->Disconnect();
     exit(0);
 }
-
 
 sub InMessage
 {
@@ -92,7 +90,6 @@ sub InMessage
     print $message->GetXML(),"\n";
     print "===\n";
 }
-
 
 sub InIQ
 {
