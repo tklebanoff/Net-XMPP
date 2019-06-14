@@ -591,17 +591,50 @@ $SKIPNS{'__netxmpp__'} = 1;
 # urn:xmpp:muclight:0#create
 #-----------------------------------------------------------------------------
 {
-    &add_ns(ns    => "urn:xmpp:muclight:0#create",
-            xpath => {
-                      RoomName => { path => 'configuration/roomname/text()' },
-                      User     => { 
-                          type => "array" ,
-                          path => 'occupants/user/text()' ,
-                      },
-                     },
-           );
+        &add_ns(ns    => 'urn:xmpp:muclight:0#create',
+                xpath => {
+                        RoomName => { path => 'configuration/roomname/text()' },
+                        Occupants => { 
+                                type => 'child' ,
+                                path => 'occupants' ,
+                                child => { ns => 'urn:xmpp:muclight:0#create:occupants', },
+                        },
+                },
+        );
 }
-
+{
+        &add_ns(ns    => 'urn:xmpp:muclight:0#create:occupants',
+                xpath => {
+                        Users => {
+                                type => 'child',
+                                path => 'user',
+                                child => { ns => 'urn:xmpp:muclight:0#create:user', },
+                                calls => [  'Get' ],
+                        }
+                        User => {
+                                type => 'child',
+                                path => 'user',
+                                child => { ns => 'urn:xmpp:muclight:0#create:user', },
+                                calls => [ 'Add' ],
+                        }
+                        Occupants => { type => 'master' },
+                },
+        );
+}
+{
+        &add_ns(ns    => 'urn:xmpp:muclight:0#create:user',
+                xpath => {
+                        Name     => { 
+                                type => 'jid' ,
+                                path => 'text()' ,
+                        },
+                        Affiliation  => { 
+                                type => 'raw' ,
+                                path => '@affiliation' ,
+                        },
+                },
+        );
+}
 
 
 sub add_ns
